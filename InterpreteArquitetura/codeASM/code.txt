@@ -1,0 +1,41 @@
+#Calcular tempo de experimento científico em segundo
+#Entrada: HH:MM:SS
+
+.text 
+
+main: 
+	addi $8, $0, 360
+	addi $9, $0, 60
+
+horas:	
+	addi $2, $0, 5
+	syscall	
+	add $10, $0, $2
+	
+minutos:	
+	addi $2, $0, 5
+	syscall	
+	add $11, $0, $2
+	
+segundo:	
+	addi $2, $0, 5
+	syscall	
+	add $12, $0, $2
+	
+mul:
+	mul $8, $8, $10 #horas(h) para segundos (s)
+	mul $9, $9, $11 #minutos(m)  para segundos (s) 
+	
+	
+	add $8, $8, $9 #horas(s) + minutos (s)
+	add $9, $8, $12 #soma de h+m(s) com segundos(s)
+	add $4, $0, $9
+
+print: 
+	addi $2, $0, 1
+	syscall
+
+over: 
+	addi $2, $0, 10
+	syscall
+	
