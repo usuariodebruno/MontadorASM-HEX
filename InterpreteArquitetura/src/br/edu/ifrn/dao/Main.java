@@ -10,15 +10,15 @@ import java.io.File;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		File file = new File("C:\\Users\\20171014040001\\Desktop\\eclipse-java-2022-09-R-win32-x86_64\\eclipse\\workspace\\InterpreteArquitetura\\codeASM\\code.txt");
-		ArrayList<String> linhas = new ArrayList<>();
+		File file = new File("C:\\Users\\20171014040001\\eclipse-workspace\\InterpreteArquitetura\\codeASM\\code.txt");
+		ArrayList<String> linhasLimpas = new ArrayList<>();
 		
 		DAOCodeFile dao = new DAOCodeFile();
-		linhas = dao.leitor(file);
-		linhas = dao.transformeBinario(linhas);
+		linhasLimpas = dao.leitorLimpador(file);
+		linhasLimpas = dao.transformeBinario(linhasLimpas);
 		
 		
-		for (String linha: linhas) {
+		for (String linha: linhasLimpas) {
 			System.out.println(linha);
 		}
 		

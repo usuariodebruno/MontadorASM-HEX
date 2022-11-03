@@ -3,7 +3,7 @@
 
 .text 
 
-main: 
+main:
 	addi $8, $0, 360
 	addi $9, $0, 60
 

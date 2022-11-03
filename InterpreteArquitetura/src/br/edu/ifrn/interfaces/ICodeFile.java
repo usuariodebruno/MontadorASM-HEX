@@ -5,5 +5,5 @@ import java.util.ArrayList;
 
 
 public interface ICodeFile {
-	public ArrayList<String> leitor(File file) throws IOException;
+	public ArrayList<String> leitorLimpador(File file) throws IOException;
 }
