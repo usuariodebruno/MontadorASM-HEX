@@ -11,14 +11,16 @@ import java.io.File;
 public class Main {
 	public static void main(String[] args) throws IOException {
 		File file = new File("C:\\Users\\20171014040001\\eclipse-workspace\\InterpreteArquitetura\\codeASM\\code.txt");
-		ArrayList<String> linhasLimpas = new ArrayList<>();
+		ArrayList<String> linhas = new ArrayList<>();
+		MontadorBinario montadorBinario = new MontadorBinario();		
+		leitorLimpador dao = new leitorLimpador();
 		
-		DAOCodeFile dao = new DAOCodeFile();
-		linhasLimpas = dao.leitorLimpador(file);
-		linhasLimpas = dao.transformeBinario(linhasLimpas);
+		linhas = dao.leitorLimpador(file); // LINHAS LIMPAS 
+		linhas = montadorBinario.transformeBinario(linhas); // LINHAS EM BINARIO COM ROTULOS
 		
 		
-		for (String linha: linhasLimpas) {
+		
+		for (String linha: linhas) {
 			System.out.println(linha);
 		}
 		
