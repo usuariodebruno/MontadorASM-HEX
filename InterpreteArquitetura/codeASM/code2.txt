@@ -1,61 +1,37 @@
+#calcular média semestral do aluno (Int)
+
 .text 
 
-main: 
-	addi $v0, $zero, 5 #ordem de serviço: entrada
-	syscall #ler
-	addi $t0, $zero, 10 #divisor 10 no primeiro registrador de variavel 
-	div $v0, $t0 #dividindo valor de entrada por $t0[10]
-	
-alocando:
-	mfhi $t7 #realocando ultimo algarismo do numero de entrada (resto - ultimo algarismo) 
-	mflo $t1 #realocando resultado inteiro da divisao 
-	
-	div $t1, $t0 #divisão do novo inteiro por $t0(10)
-	
-	mfhi $t6 #realocando ultimo algarismo do novo numero (resto - penutimo algarismo) 
-	mflo $t1 #realocando resultado inteiro da divisao 
-	
-	div $t1, $t0  #divisão do novo inteiro por $t0(10)
-	
-	mfhi $t5 #realocando ultimo algarismo do numero de novo numero (resto - segundo) 	
-	mflo $t1 #realocando resultado inteiro da divisao 
-	
-	div $t1, $t0  #divisão do novo inteiro por $t0(10)
-	
-	mfhi $t4 #realocando ultimo algarismo do numero de novo numero (resto - primeiro) 	
-	mflo $t1 #realocando resultado inteiro da divisao	
-out:	
-	add $a0, $zero, $t7 #imprimindo	
-	addi $v0, $zero, 1 #ordem de serviço
-	syscall
-	
-	add $4, $zero, '\n' #Adicionar '/n' no registrador de saida
-	addi $2, $zero, 11 #Ordem de serviço; imprimir caracter
-	syscall		
-	
-	add $a0, $zero, $t6 #imprimindo	
-	addi $v0, $zero, 1 #ordem de serviço
-	syscall
-	
-	add $4, $zero, '\n' #Adicionar '/n' no registrador de saida
-	addi $2, $zero, 11 #Ordem de serviço; imprimir caracter
+main:
+	#1 - ler um numero e armazena-lo
+	addi $v0, $zero, 5 #ordem de serviço: ler entrada
 	syscall	
+mult2:
+	add $t0, $zero, $v0 # $t0 <- $v0  - armazenando numero
+	sll $t0, $t0, 1 #multiplicar por dois
 	
-	add $a0, $zero, $t5 #imprimindo	
-	addi $v0, $zero, 1 #ordem de serviço
-	syscall
-	
-	add $4, $zero, '\n' #Adicionar '/n' no registrador de saida
-	addi $2, $zero, 11 #Ordem de serviço; imprimir caracter
+armazenar:
+	#2 - ler outro numero e armazena-lo
+	addi $v0, $zero, 5 #ordem de serviço 
 	syscall	
+	add $t1, $zero, $v0 # $t1 <- $v0 armazenando segundo numero
 	
-	add $a0, $zero, $t4 #imprimindo	
-	addi $v0, $zero, 1 #ordem de serviço
+mult3:
+	add $t2, $zero $t1 #copiando valor de $t1
+	sll $t1, $t1, 1 #multiplicando por 2
+	add $t2, $t1, $t2 #somando numero multiplicado mais ele originalmente (multiplicando por 3) e armazenando em $t2
+
+armz:	
+	add $t3, $t0, $t2 #adicionado soma das notas multiplicadas em $t3
+	addi $t4, $zero, 5 #registrando
+div: 
+	div $t3, $t4  #dividindo notas pela soma dos pesos 5
+	mflo $a0 #armazenando resuldado em LO (inteiro) da divisão na var de visualização
+	
+	
+	addi $v0, $zero, 1 #ordem de serviço: imprimir 
 	syscall
-	
-	
-over:  
-	addi $v0, $zero, 10 #finalizar programa
+over:
+	addi $v0, $zero, 10
 	syscall
-	
 	
