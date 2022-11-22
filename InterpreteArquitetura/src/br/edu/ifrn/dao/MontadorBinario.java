@@ -3,9 +3,10 @@ package br.edu.ifrn.dao;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MontadorBinario {
-	
+	int i;
 	// OK - VERIFICADO
 	private static String converteDecimalParaBinario(int valor) {
 		int qtd = 5;
@@ -17,6 +18,8 @@ public class MontadorBinario {
 		return df.format(Integer.parseInt(Integer.toBinaryString(valor)));
 	}
 
+	
+	
 	// PADRAO BINARIO
 	public ArrayList<String> transformeBinario(ArrayList<String> linhasLimpas) throws IOException {
 		ArrayList<String> linhas = new ArrayList<>();
@@ -33,6 +36,8 @@ public class MontadorBinario {
 	}
 
 	private String montadorBinario(String[] arraySeparadoporespaco) {
+		++i; // CONTADOR LINHA DO DOC
+		
 
 		// FAMILIA R
 		// -------------------------------------------------------------------------------------------------------
@@ -250,20 +255,33 @@ public class MontadorBinario {
 		// FAMILIA I
 		// -------------------------------------------------------------------------------------------------------
 		// ADDI - I
-		else if (arraySeparadoporespaco[0].equalsIgnoreCase("addi")) {
+		
+		else if (arraySeparadoporespaco[0].equalsIgnoreCase("addi")) {			
+			System.out.println("# linha " + i);
+			System.out.println(Arrays.toString(arraySeparadoporespaco));
+			
 			arraySeparadoporespaco[0] = "001000";
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // CALCULANDO
-																														// IMMEDIATE
-																														// EM
-																														// BINARIO
+			System.out.println(arraySeparadoporespaco[0] +" CODE");
+			System.out.println(arraySeparadoporespaco[1] + " RS");
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RS
+			System.out.println(arraySeparadoporespaco[1] + " RS B");
+			System.out.println("-------");
+			
+			System.out.println(arraySeparadoporespaco[2] + " RT");
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RT 
+			System.out.println(arraySeparadoporespaco[2]+" RT B");
+			System.out.println("-------");
+			
+			System.out.println(arraySeparadoporespaco[3] + " IM");
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // CALCULANDO IMMEDIATE 2 By
+			System.out.println(immediate+ " IM B");			
+			
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			// return "F ".concat(arraySeparadoporespaco[0].concat(" RT
-			// ").concat(arraySeparadoporespaco[1].concat(" RS
-			// ").concat(arraySeparadoporespaco[2].concat(" ||
-			// ").concat(arraySeparadoporespaco[3]))));
-
+			System.out.println(arraySeparadoporespaco[3]+ " IM B");
+			System.out.println("-------");
+			
+			System.out.println(arraySeparadoporespaco[0].concat(arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3]))));
+			System.out.println("---------------------------------------------------");
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}
@@ -277,11 +295,7 @@ public class MontadorBinario {
 																														// IMMEDIATE
 																														// EM
 																														// BINARIO
-			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			// return "F ".concat(arraySeparadoporespaco[0].concat(" RT
-			// ").concat(arraySeparadoporespaco[1].concat(" RS
-			// ").concat(arraySeparadoporespaco[2].concat(" ||
-			// ").concat(arraySeparadoporespaco[3]))));
+			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA			
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}
@@ -295,11 +309,7 @@ public class MontadorBinario {
 																														// IMMEDIATE
 																														// EM
 																														// BINARIO
-			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			// return "F ".concat(arraySeparadoporespaco[0].concat(" RT
-			// ").concat(arraySeparadoporespaco[1].concat(" RS
-			// ").concat(arraySeparadoporespaco[2].concat(" ||
-			// ").concat(arraySeparadoporespaco[3]))));
+			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA	
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}
@@ -314,10 +324,6 @@ public class MontadorBinario {
 																														// EM
 																														// BINARIO
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			// return "F ".concat(arraySeparadoporespaco[0].concat(" RT
-			// ").concat(arraySeparadoporespaco[1].concat(" RS
-			// ").concat(arraySeparadoporespaco[2].concat(" ||
-			// ").concat(arraySeparadoporespaco[3]))));
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}
@@ -332,10 +338,6 @@ public class MontadorBinario {
 																														// EM
 																														// BINARIO
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			// return "F ".concat(arraySeparadoporespaco[0].concat(" RT
-			// ").concat(arraySeparadoporespaco[1].concat(" RS
-			// ").concat(arraySeparadoporespaco[2].concat(" ||
-			// ").concat(arraySeparadoporespaco[3]))));
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}
@@ -350,10 +352,6 @@ public class MontadorBinario {
 																														// EM
 																														// BINARIO
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			// return "F ".concat(arraySeparadoporespaco[0].concat(" RT
-			// ").concat(arraySeparadoporespaco[1].concat(" RS
-			// ").concat(arraySeparadoporespaco[2].concat(" ||
-			// ").concat(arraySeparadoporespaco[3]))));
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}
@@ -368,10 +366,6 @@ public class MontadorBinario {
 																														// EM
 																														// BINARIO
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			// return "F ".concat(arraySeparadoporespaco[0].concat(" RT
-			// ").concat(arraySeparadoporespaco[1].concat(" RS
-			// ").concat(arraySeparadoporespaco[2].concat(" ||
-			// ").concat(arraySeparadoporespaco[3]))));
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}

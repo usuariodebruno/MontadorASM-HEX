@@ -26,7 +26,7 @@ public class Main {
 		System.out.println("\n################ HEXADECIMAL ################\n ");
 		linhas = dao.coverteHexadecimal(linhas);	
 		for (String linha: linhas) {
-			System.out.println(linha.toUpperCase());
+			System.out.println(linha);
 		}
 		
 				
