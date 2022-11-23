@@ -3,7 +3,7 @@ package br.edu.ifrn.dao;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-//import java.util.Arrays;
+import java.util.Arrays;
 
 public class MontadorBinario {
 	int i;
@@ -17,6 +17,7 @@ public class MontadorBinario {
 		}
 		DecimalFormat df = new DecimalFormat(pattern.toString());
 		return df.format(Integer.parseInt(Integer.toBinaryString(valor)));
+
 	}
 
 	// PADRAO BINARIO
@@ -42,12 +43,40 @@ public class MontadorBinario {
 		// ADD - R
 		if (arraySeparadoporespaco[0].equalsIgnoreCase("add")) {
 			arraySeparadoporespaco[0] = "000000"; // SPECIAL
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			arraySeparadoporespaco[3] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3])); // RD
+			
+			System.out.println("####################### \n");			
+			System.out.println("ADD - LINHA: " + i);
+			System.out.println(Arrays.toString(arraySeparadoporespaco));
+			
+			System.out.println("RS " + arraySeparadoporespaco[1]);	
+			
+			int rs = Integer.parseInt(arraySeparadoporespaco[1]);	
+			System.out.println("----------");
+			
+			
+			System.out.println("RT " + arraySeparadoporespaco[2]);
+			int rt = Integer.parseInt(arraySeparadoporespaco[2]);	
+			System.out.println("----------");
+
+			System.out.println("RD " + arraySeparadoporespaco[3]);
+			int rd = Integer.parseInt(arraySeparadoporespaco[3]);	
+			System.out.println("----------");
+			
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(rd); // RD
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(rs); // RS
+			arraySeparadoporespaco[3] = converteDecimalParaBinario(rt); // RT
+			
 			String add = "100000"; // ADD
-			return arraySeparadoporespaco[0].concat(arraySeparadoporespaco[1]
-					.concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3].concat("00000".concat(add)))));
+			
+			System.out.println("RD " + arraySeparadoporespaco[1]);
+			System.out.println("RS " + arraySeparadoporespaco[2]);
+			System.out.println("RT " + arraySeparadoporespaco[3]);
+			
+			System.out.println(arraySeparadoporespaco[0].concat(arraySeparadoporespaco[2]
+					.concat(arraySeparadoporespaco[3].concat(arraySeparadoporespaco[1].concat("00000".concat(add))))));
+			
+			return arraySeparadoporespaco[0].concat(arraySeparadoporespaco[2]
+					.concat(arraySeparadoporespaco[3].concat(arraySeparadoporespaco[1].concat("00000".concat(add)))));
 		}
 
 		// ADDU - R
@@ -255,55 +284,41 @@ public class MontadorBinario {
 		// ADDI - I
 
 		else if (arraySeparadoporespaco[0].equalsIgnoreCase("addi")) {
-			//System.out.println("# linha " + i);
-			//System.out.println(Arrays.toString(arraySeparadoporespaco));                !!!!!!!!!!!!!!
-
-			arraySeparadoporespaco[0] = "001000";
-			//System.out.println(arraySeparadoporespaco[0] + " CODE");
-			//System.out.println(arraySeparadoporespaco[1] + " RS");
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RS
-			//System.out.println(arraySeparadoporespaco[1] + " RS B");
-			//System.out.println("-------");
-
-			//System.out.println(arraySeparadoporespaco[2] + " RT");
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RT
-			//System.out.println(arraySeparadoporespaco[2] + " RT B");
-			//System.out.println("-------");
-
-			//System.out.println(arraySeparadoporespaco[3] + " IM");
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
+			arraySeparadoporespaco[0] = "001000";	 // ADDI 		
+			String RS = arraySeparadoporespaco[1];	
+			String RT = arraySeparadoporespaco[2];	
 			
-			//System.out.println(immediate + " IM B");
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(RT)); // RT
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(RS)); // RS
+			
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
-			//System.out.println(arraySeparadoporespaco[3] + " IM B");
-			///System.out.println("-------");
-
-			//System.out.println(arraySeparadoporespaco[0].concat(
-			//		arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3]))));
-			//System.out.println("---------------------------------------------------");
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
 		}
 
 		// ADDIU - I
 		else if (arraySeparadoporespaco[0].equalsIgnoreCase("addiu")) {
-			arraySeparadoporespaco[0] = "001001"; // ADDIU
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // IMMEDIATE
-			
+			arraySeparadoporespaco[0] = "001001"; // ADDIU			
+			String RS = arraySeparadoporespaco[1];	
+			String RT = arraySeparadoporespaco[2];				
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(RT)); // RT				
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(RS)); // RS
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
+
 		}
 
 		// ANDI - I
 		else if (arraySeparadoporespaco[0].equalsIgnoreCase("andi")) {
 			arraySeparadoporespaco[0] = "001100"; // ANDI
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // IMMEDIATE
-			
+			String RS = arraySeparadoporespaco[1];	
+			String RT = arraySeparadoporespaco[2];				
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(RT)); // RT				
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(RS)); // RS
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
@@ -312,10 +327,11 @@ public class MontadorBinario {
 		// ORI - I
 		else if (arraySeparadoporespaco[0].equalsIgnoreCase("ori")) {
 			arraySeparadoporespaco[0] = "001101";
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // IMMEDIATE
-			
+			String RS = arraySeparadoporespaco[1];	
+			String RT = arraySeparadoporespaco[2];				
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(RT)); // RT				
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(RS)); // RS
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
@@ -324,10 +340,11 @@ public class MontadorBinario {
 		// SLTI - I
 		else if (arraySeparadoporespaco[0].equalsIgnoreCase("slti")) {
 			arraySeparadoporespaco[0] = "001010";
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // IMMEDIATE
-			
+			String RS = arraySeparadoporespaco[1];	
+			String RT = arraySeparadoporespaco[2];				
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(RT)); // RT				
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(RS)); // RS
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
@@ -336,10 +353,11 @@ public class MontadorBinario {
 		// SLTIU - I
 		else if (arraySeparadoporespaco[0].equalsIgnoreCase("sltiu")) {
 			arraySeparadoporespaco[0] = "001011";
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // IMMEDIATE
-			
+			String RS = arraySeparadoporespaco[1];	
+			String RT = arraySeparadoporespaco[2];				
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(RT)); // RT				
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(RS)); // RS
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));
@@ -348,10 +366,11 @@ public class MontadorBinario {
 		// XORI - I
 		else if (arraySeparadoporespaco[0].equalsIgnoreCase("xori")) {
 			arraySeparadoporespaco[0] = "001110";
-			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[1])); // RT
-			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[2])); // RS
-			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // IMMEDIATE
-			
+			String RS = arraySeparadoporespaco[1];	
+			String RT = arraySeparadoporespaco[2];				
+			arraySeparadoporespaco[1] = converteDecimalParaBinario(Integer.parseInt(RT)); // RT				
+			arraySeparadoporespaco[2] = converteDecimalParaBinario(Integer.parseInt(RS)); // RS
+			int immediate = Integer.parseInt(converteDecimalParaBinario(Integer.parseInt(arraySeparadoporespaco[3]))); // immediate
 			arraySeparadoporespaco[3] = String.format("%016d", immediate); // IMMEDIATE - ZEROS A ESQUERDA
 			return arraySeparadoporespaco[0].concat(
 					arraySeparadoporespaco[1].concat(arraySeparadoporespaco[2].concat(arraySeparadoporespaco[3])));

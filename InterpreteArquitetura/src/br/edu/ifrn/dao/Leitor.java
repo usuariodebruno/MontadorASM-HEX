@@ -19,7 +19,7 @@ public class Leitor implements ICodeFile {
 
 		while (sc.hasNextLine()) {
 			linha = sc.nextLine();
-			System.out.println(linha);
+			
 			// RETIRANDO CARACTERE ESPECIAIS
 
 			linha = linha.replace(",", "");
@@ -63,7 +63,7 @@ public class Leitor implements ICodeFile {
 			linha = linha.replace("$ra", "31");
 
 			linha = linha.replace("$", "");
-			linha = linha.replace("$zero", " 0");
+			linha = linha.replace("$zero", " 0"); 
 
 			linha = linha.stripIndent(); // TIRANDO INDENTAÇÃO
 
@@ -77,7 +77,7 @@ public class Leitor implements ICodeFile {
 					linhas.add(linha);
 				}
 			}
-			// System.out.println(linha); // EXIBIR LINHAS LIMPAS                !!!!!!!!!!!!!!!
+			 System.out.println(linha); // EXIBIR LINHAS LIMPAS  
 
 		}
 		sc.close();
